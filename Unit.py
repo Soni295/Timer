@@ -9,17 +9,38 @@ class Unit():
     self.entry.config(bg='black', fg='white', justify='center')
 
     self.btn_up = Button(frame, text='add', command=self.add)
-    self.btn_up.grid(row=3, column=column, pady=10)
-    self.btn_down = Button(frame, text='subtract')
-    self.btn_down.grid(row=4, column=column)
+    self.btn_up.grid(row=1, column=column, pady=10)
+    self.btn_down = Button(frame, text='subtract', command=self.subtract)
+    self.btn_down.grid(row=3, pady=10, column=column)
 
     self.units= [ '0' + str(i) if (10 > i)  else str(i) for i in range(units)]
-    print(self.units)
 
   def add(self):
-    prev = self.var.get()
-    next = self.units.index(prev)
-    print(next)
+    prev = int(self.var.get())
+    print(prev)
+    print(len(self.units))
 
+    if prev == len(self.units) -1 :
+      self.var.set(self.units[0])
+    else:
+      self.var.set(self.units[prev + 1])
+
+  def subtract(self):
+    prev = int(self.var.get())
+    print(prev)
+    print(len(self.units))
+
+    if prev == '00':
+      self.var.set(self.units[0])
+    else:
+      self.var.set(self.units[prev - 1])
+
+
+"""
+    if next == (self.units[len(self.units)] - 1):
+      self.var.set(self.units[0])
+    else:
+      self.var.set(self.units[int(next)])
+"""
 
 
