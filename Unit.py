@@ -8,7 +8,6 @@ class Unit():
     self.entry.grid(row=2, column=column, padx=10, pady=10)
     self.entry.config(bg='black', fg='white', justify='center')
 
-
     self.next = next
     self.btns(frame, column)
 
@@ -43,11 +42,13 @@ class Unit():
   def countdown(self):
     print('hola')
 
-"""
-    if next == (self.units[len(self.units)] - 1):
-      self.var.set(self.units[0])
-    else:
-      self.var.set(self.units[int(next)])
-"""
+  def block(self):
+    self.btn_up['state'] = 'disabled'
+    self.btn_down['state'] = 'disabled'
+    if self.next != None:  self.next.block()
 
+  def unblock(self):
+    self.btn_up['state'] = 'normal'
+    self.btn_down['state'] = 'normal'
+    if self.next != None:  self.next.unblock()
 

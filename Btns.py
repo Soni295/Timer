@@ -2,9 +2,6 @@ from tkinter import *
 from time import sleep
 from threading import Thread
 
-
-
-
 class Btn():
   def __init__(self, frame: Frame, min_unit):
     self.var = StringVar()
@@ -16,26 +13,26 @@ class Btn():
     self.min_unit = min_unit
 
   def action(self):
+
     self.options = {
-      'Start': Thread(target=self.start).start,
+      'Start': Thread(target=self.run).start,
       'Pause': self.pause,
-      'Continue': self.conti,
+      'Continue': Thread(target=self.run).start,
     }
-    print(self.var.get())
+
+
     self.options[self.var.get()]()
 
-  def start(self):
+  def run(self):
     self.var.set('Pause')
+    self.min_unit.block()
 
     while self.var.get() == 'Pause':
-      print(self.var.get())
-      sleep(1)
       self.min_unit.countdown()
+      sleep(1)
 
   def pause(self):
-    print('estoy aca')
     self.var.set('Continue')
-
-  def conti(self):
-    self.var.set('Pause')
+    print('estoy aca')
+    self.min_unit.unblock()
 
