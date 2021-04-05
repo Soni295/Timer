@@ -1,4 +1,5 @@
-from tkinter import StringVar, Entry, Button, Frame
+from tkinter import StringVar, Entry, Frame
+from Btns.Btns_Change import Button_Add, Button_Subtract
 
 class Unit():
   def __init__(self, frame: Frame, column: int, units: int, next=None):
@@ -9,46 +10,31 @@ class Unit():
     self.entry.config(bg='black', fg='white', justify='center')
 
     self.next = next
-    self.btns(frame, column)
+    self.state = True
 
-    self.units = [ '0' + str(i) if (10 > i)  else str(i) for i in range(units)]
-
-  def btns(self, frame, column):
-    self.btn_up = Button(frame, text='add', command=self.add)
-    self.btn_up.grid(row=1, column=column, pady=10)
-    self.btn_down = Button(frame, text='subtract', command=self.subtract)
-    self.btn_down.grid(row=3, pady=10, column=column)
-
-  def add(self):
-    prev = int(self.var.get())
-    print(prev)
-    print(len(self.units))
-
-    if prev == len(self.units) -1 :
-      self.var.set(self.units[0])
-    else:
-      self.var.set(self.units[prev + 1])
-
-  def subtract(self):
-    prev = int(self.var.get())
-    print(prev)
-    print(len(self.units))
-
-    if prev == 0:
-      self.var.set(self.units[0])
-    else:
-      self.var.set(self.units[prev - 1])
+    self.units = ['0' + str(i) if (10 > i) else str(i) for i in range(units)]
+    self.btn_up = Button_Add(frame, column, self.var, self.units)
+    self.btn_down = Button_Subtract(frame, column, self.var, self.units)
 
   def countdown(self):
-    print('hola')
+    prev = int(self.var.get())
 
-  def block(self):
-    self.btn_up['state'] = 'disabled'
-    self.btn_down['state'] = 'disabled'
-    if self.next != None:  self.next.block()
+    if prev == 0:
+      if self.next == None:
+        self.state = False
 
-  def unblock(self):
-    self.btn_up['state'] = 'normal'
-    self.btn_down['state'] = 'normal'
-    if self.next != None:  self.next.unblock()
 
+      elif self.next.countdown() == 1:
+        next = self.units[len(self.units) - 1]
+        self.var.set(next)
+    else:
+      next = self.units[prev - 1]
+      self.var.set(next)
+      print(next)
+      return 1
+
+  def block(self, block):
+    state = 'disabled' if block else 'normal'
+    self.btn_up.btn['state'] = state
+    self.btn_down.btn['state'] = state
+    if self.next != None:  self.next.block(block)

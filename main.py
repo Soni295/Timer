@@ -2,7 +2,7 @@
 
 from tkinter import *
 from Unit import Unit
-from Btns import Btn
+from Btns.Start import Btn
 
 if __name__ == '__main__':
   root = Tk()
@@ -15,5 +15,5 @@ if __name__ == '__main__':
   hours = Unit(my_frame, 1, 24)
   minutes = Unit(my_frame, 2, 60, hours)
   seconds = Unit(my_frame, 3, 60, minutes)
-  btns = Btn(my_frame, seconds)
+  btns = Btn(my_frame, seconds, hours)
   root.mainloop()
